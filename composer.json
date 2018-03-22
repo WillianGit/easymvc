@@ -2,6 +2,7 @@
   "name": "betel-digital/easymvc",
   "Description": "O EasyMvc Framework.",
   "license": "MIT",
+  "type": "library",
   "authors": [
     {
 	  "name": "Willian Pereira",
