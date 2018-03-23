@@ -3,6 +3,8 @@
   "Description": "O EasyMvc Framework.",
   "license": "MIT",
   "type": "library",
+  "minimum-stability": "dev",
+  "version": "dev-master",
   "authors": [
     {
 	  "name": "Willian Pereira",
