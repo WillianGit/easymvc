@@ -86,8 +86,8 @@ class Route
 	
 	if(!isset($routeFound) or !$routeFound)
 	{
-		  $view = __DIR__ . '/../../app/views';
-		  $cache = __DIR__ . '/../../cache';
+		  $view = __DIR__ . '/../../../../../../app/views';
+		  $cache = __DIR__ . '/../../../../../../cache';
 		  $blade = new Blade($view, $cache);
 		  echo $blade->make('errors.404');
 	}
