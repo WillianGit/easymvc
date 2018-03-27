@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Framework\Model;
 
 use PDO;
 use PDOException;
@@ -8,11 +8,11 @@ class Database
 {
   public static function getDatabase()
   {
-	    $config = require __DIR__ . '/../../config/database.php';
+	    $config = require __DIR__ . '/../../../../../../config/database.php';
 		
 		if($config['driver'] == 'sqlite')
 		{
-			  $sqlite = 'sqlite:' . __DIR__ . '/../../database/' . $config['sqlite']['database'];
+			  $sqlite = 'sqlite:' . __DIR__ . '/../../../../../../database/' . $config['sqlite']['database'];
 			  
 			  try
 			  {

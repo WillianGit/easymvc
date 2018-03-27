@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Framework\Model;
 
 use PDO;
 
@@ -7,11 +7,70 @@ abstract class Model
 { // Model
   private $pdo;
   protected $table;
+  private $query;
+  private $where;
+  private $orWhere;
   
   public function __construct()
   { // construct
-    $this->pdo = \Framework\Database::getDatabase();
+    $this->pdo = Database::getDatabase();
+	$this->query = "SELECT * FROM {$this->table}";
   } // construct
+  
+  public static function select(array $data)
+  { // select
+    $instance = new static;
+	$data = implode(', ', $data);
+	$instance->query = "SELECT {$data} FROM {$instance->table}";
+	return $instance;
+  } // select
+  
+  public static function where(array $data)
+  { // where
+    $instance = new static;
+	$instance->where = $instance->prepareDataWhere($data);
+	$instance->query .= " WHERE {$instance->where[0]}";
+	
+	return $instance;
+  } // where
+  
+  private function prepareDataWhere(array $data)
+  { // prepareDataWhere
+    $strBinds = "";
+	$binds = [];
+	$values = [];
+	
+	foreach($data as $key => $value)
+	{
+		  $strBinds = "{$strBinds} AND {$key}=:{$key}";
+		  $binds[] = ":{$key}";
+		  $values[] = $value;
+	}
+	
+	$strBinds = substr($strBinds, 5);
+	return [
+	  $strBinds,
+	  $binds,
+	  $values
+	];
+  } // prepareDataWhere
+  
+  public function get()
+  { // get
+    $stmt = $this->pdo->prepare($this->query);
+	
+	if(is_array($this->where))
+	{
+	  for($i=0; $i<count($this->where[1]); $i++)
+	  {
+	    $stmt->bindValue($this->where[1][$i], $this->where[2][$i]);
+	  }
+	}
+	$stmt->execute();
+	$result = $stmt->fetch();
+	$stmt->closeCursor();
+	return $result;
+  } // get
   
   public static function all()
   { // all
@@ -90,7 +149,7 @@ abstract class Model
 	{
 		  $strKeys = "{$strKeys}, {$key}";
 		  $strBinds = "{$strBinds}, :{$value}";
-		  $binds[] = ":{$key]";
+		  $binds[] = ":{$key}";
 		  $values[] = $value;
 	}
 	
@@ -125,4 +184,9 @@ abstract class Model
 	  $values
 	];
   } // prepareDataUpdate
+  
+  public function toString()
+  { // toString
+    return $this->query;
+  } // toString
 } // Model

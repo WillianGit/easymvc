@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Framework\Route;
 
 use Jenssegers\Blade\Blade;
 
@@ -41,7 +41,7 @@ class Route
     return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   } // getURL
   
-  private function getRequest()
+  /*private function getRequest()
   { // getRequest
     $obj = new \stdClass;
 	
@@ -52,7 +52,7 @@ class Route
 	}
 	
 	return $obj;
-  } // getRequest
+  } // getRequest*/
   
   private function run()
   { // run
@@ -93,16 +93,18 @@ class Route
 	}
 	else
 	{
-		  $controller = Container::newController($controller);
+		  $controller = \Framework\Container::newController($controller);
 		  
 		  if(count($params))
 		  {
-			    $params[] = $this->getRequest();
+			    //$params[] = $this->getRequest();
 				call_user_func_array([$controller, $action], $params);
 		  }
 		  else
 		  {
-			    $controller->$action($this->getRequest());
+			    //$controller->$action($this->getRequest());
+			    $request = new \Framework\Request\Request;
+				$controller->$action($request);
 		  }
 	}
   } // run

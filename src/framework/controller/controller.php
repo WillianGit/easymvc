@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Framework\Controller;
 
 use Jenssegers\Blade\Blade;
 
@@ -11,8 +11,8 @@ class Controller
   protected function render($viewPath, $params = array())
   { // render
     $this->viewPath = $viewPath;
-	$view = __DIR__ . '/../../app/views';
-	$cache = __DIR__ . '/../../cache';
+	$view = __DIR__ . '/../../../../../../app/views';
+	$cache = __DIR__ . '/../../../../../../cache';
 	
 	try
 	{
