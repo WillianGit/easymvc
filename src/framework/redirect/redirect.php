@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Framework\Redirect;
 
 class Redirect
 { // Redirect
